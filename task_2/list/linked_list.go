@@ -1,4 +1,4 @@
-package main
+package list
 
 import (
 	"errors"
@@ -117,26 +117,10 @@ func compare(el1 interface{}, el2 interface{}) (bool, error) {
 	}
 }
 
-func main() {
-	list := LinkedList{}
-	list.Insert("0")
-	list.Insert("1")
-	list.Insert("2")
-	list.Insert("3")
-	list.Insert("4")
-	if err := list.Sort(); err != nil {
-		fmt.Println("Error: ", err)
+func NewLinkedList(values ...interface{}) *LinkedList {
+	list := new(LinkedList)
+	for _, node := range values {
+		list.Insert(node)
 	}
-	list.Display()
-	if err := list.Delete(1); err != nil {
-		fmt.Println("Error: ", err)
-	}
-	list.Display()
-	list.Deletion()
-	list.Display()
-	if search, err := list.Search(1); err != nil {
-		fmt.Println("Error: ", err)
-	} else {
-		fmt.Println(search)
-	}
+	return list
 }

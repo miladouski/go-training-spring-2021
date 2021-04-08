@@ -1,8 +1,7 @@
-package main
+package queue
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 )
 
@@ -114,26 +113,13 @@ func compare(el1 interface{}, el2 interface{}) (bool, error) {
 	}
 }
 
-func main() {
-	queue := Queue{cap: 10}
-	if err := queue.Enqueue(10); err != nil {
-		fmt.Println("error: ", err)
+func NewQueue(cap int, values ...interface{}) (*Queue, error) {
+	queue := new(Queue)
+	queue.cap = cap
+	for _, value := range values {
+		if err := queue.Enqueue(value); err != nil {
+			return queue, errors.New("queue is full")
+		}
 	}
-	if err := queue.Enqueue(9); err != nil {
-		fmt.Println("error: ", err)
-	}
-	if err := queue.Sort(); err != nil {
-		fmt.Println("error: ", err)
-	}
-	if value, err := queue.Dequeue(); err != nil {
-		fmt.Println("error", err)
-	} else {
-		fmt.Println(value)
-	}
-	if value, err := queue.Peek(); err != nil {
-		fmt.Println("error", err)
-	} else {
-		fmt.Println(value)
-	}
-
+	return queue, nil
 }
