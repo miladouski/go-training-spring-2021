@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	queue := queue.NewQueue(4, 0, 1, 2, 3)
+	queue, _ := queue.NewQueue(4, 0, 1, 2, 3)
 	list := list.NewLinkedList(3, 2, 1, 0)
 	list.Display()
 	if value, err := queue.Peek(); err != nil {
