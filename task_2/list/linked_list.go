@@ -21,10 +21,14 @@ type LinkedList struct {
 
 //Adds an element at the beginning of the list
 //Takes a value of type interface{}
-func (l *LinkedList) Insert(value interface{}) {
+func (l *LinkedList) Insert(value interface{}) error {
+	if l.head != nil && reflect.TypeOf(l.head.value) != reflect.TypeOf(value) {
+		return errors.New("wrong type")
+	}
 	link := l.head
 	l.head = &Node{value, link}
 	l.len++
+	return nil
 }
 
 // Deletes an element at the beginning of the list
@@ -117,10 +121,12 @@ func compare(el1 interface{}, el2 interface{}) (bool, error) {
 	}
 }
 
-func NewLinkedList(values ...interface{}) *LinkedList {
+func NewLinkedList(values ...interface{}) (*LinkedList, error) {
 	list := new(LinkedList)
 	for _, node := range values {
-		list.Insert(node)
+		if err := list.Insert(node); err != nil {
+			return list, err
+		}
 	}
-	return list
+	return list, nil
 }
