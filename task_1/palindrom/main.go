@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bytes"
+	"fmt"
+)
+
 /*
  Description: A palindrome is a word, phrase, number, or other
  sequence of characters which reads the same backward or forward.
@@ -15,9 +20,21 @@ package main
 */
 
 func isPalindrome(str string) bool {
-	panic("Implement me!")
+	l := len(str)
+	half := l / 2
+	byteStr := []byte(str)
+	forw := byteStr[:half]
+	if l%2 != 0 {
+		half += 1
+	}
+	rev := byteStr[half:]
+	var back []byte
+	for i := l/2 - 1; i >= 0; i-- {
+		back = append(back, rev[i])
+	}
+	return bytes.Equal(forw, back)
 }
 
 func main() {
-
+	fmt.Println(isPalindrome("anna"))
 }
