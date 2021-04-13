@@ -14,11 +14,11 @@ import (
 */
 
 func isUsername(username string) bool {
-	regex := "^[a-z0-9_]{4,16}$"
+	regex := "^[a-z0-9][a-z0-9_]{3,15}$"
 	matched, _ := regexp.MatchString(regex, username)
 	return matched
 }
 
 func main() {
-	fmt.Println(isUsername("lowercase_"))
+	fmt.Println(isUsername("lowercas_e"))
 }
